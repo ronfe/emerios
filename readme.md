@@ -1,3 +1,8 @@
+
+### Step 0 Mock Data
+
+* Mock script
+
 ### Step 1 Script Development
 
 Develop scripts.  
@@ -20,9 +25,10 @@ Test points.
 * Analyze all the point sending chances
 * test chance by chance
 
-### Step 4 Mock Data
+### Step 4 Mock Data II
 
 * Mock script
+
 
 ### Step 5 Test script
 
