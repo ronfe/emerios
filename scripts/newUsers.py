@@ -4,8 +4,28 @@ from metaConfig import *
 
 def get_all_user_id():
     pipeLine = [
-        {"$match": {"createdBy": {"$gte": START_DATE, "$lt": END_DATE}}},
-        {"$group": {"_id": None, "users": {"$addToSet": "$user"}}}
+        {"$match": {"eventTime": {"$gte": START_DATE, "$lt": END_DATE}}},
+        {"$group": {"_id": "$device", "users": {"$addToSet": "$user"}}}
     ]
-    a = list(events.aggregate(pipeLine))[0]['users']
-    return a
+    userPipeLine = [
+        {"$match": {"eventTime": {"$gte": START_DATE, "$lt": END_DATE}}},
+        {"$group": {"_id": "$user", "devices": {"$addToSet": "$device"}}}
+    ]
+    device_list = list(events.aggregate(pipeLine))
+    user_list = list(events.aggregate(userPipeLine))
+
+    unit_devices = []
+    unit_users = {}
+    for each in user_list:
+        unit_devices.append(each['devices'][0])
+
+    for each in device_list:
+        if len(each['users']) > 1:
+            unit_users[each['_id']] = each['users']
+
+
+    return {
+        "unitDevice": unit_devices,
+        "unitUser": unit_users
+    }
+
