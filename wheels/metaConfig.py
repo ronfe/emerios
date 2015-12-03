@@ -1,6 +1,6 @@
 __author__ = 'ronfe'
 
-from pymongo import MongoClient
+from pymongo import MongoClient, DESCENDING
 from bson.objectid import ObjectId
 import datetime
 
