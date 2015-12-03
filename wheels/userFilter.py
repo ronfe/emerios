@@ -2,6 +2,10 @@ __author__ = 'ronfe'
 
 from metaConfig import *
 
+# API used for testing
+def test():
+    return "I am testing"
+
 def get_all_user_id():
     pipeLine = [
         {"$match": {"eventTime": {"$gte": START_DATE, "$lt": END_DATE}}},
