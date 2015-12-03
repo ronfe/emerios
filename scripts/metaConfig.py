@@ -8,5 +8,7 @@ db = MongoClient('10.8.8.111:27017')['yangcong-prod25']
 events = db['points']
 users = db['users']
 
+device_cache = db['deviceCache']
+
 START_DATE = datetime.datetime(2015,11,1)
 END_DATE = datetime.datetime(2015,11,1,1)
