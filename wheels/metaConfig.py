@@ -3,6 +3,7 @@ __author__ = 'ronfe'
 from pymongo import MongoClient, DESCENDING
 from bson.objectid import ObjectId
 import datetime
+import threading
 
 db = MongoClient('10.8.8.111:27017')['yangcong-prod25']
 events = db['points']
