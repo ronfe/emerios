@@ -6,17 +6,17 @@ from wheels import uf
 from wheels.metaConfig import *
 new_users = uf.get_new_user_id()
 
-print("2. 进入启动页面 UV enterGuidePage:")
+print("11. 完成学习模块或练习模块 completeLearning completeMaster:")
 
 pipeLine = [
-    {"$match": {"eventKey": "enterGuidePage", "eventTime": {"$gte": START_DATE, "$lt": END_DATE}, "platform": "app", "platform2": "iOS"}},
+    {"$match": {"eventKey": {"$in": ["completeLearning", "completeMaster"]}, "eventTime": {"$gte": START_DATE, "$lt": END_DATE}, "platform": "app", "platform2": "iOS"}},
     {"$group": {"_id": None, "devices": {"$addToSet": "$device"}}}
 ]
 
 device_list = list(events.aggregate(pipeLine))[0]['devices']
 
 pipeLine = [
-    {"$match": {"eventKey": "enterGuidePage", "eventTime": {"$gte": START_DATE, "$lt": END_DATE}, "platform": "app", "platform2": "iOS"}},
+    {"$match": {"eventKey": {"$in": ["completeLearning", "completeMaster"]}, "eventTime": {"$gte": START_DATE, "$lt": END_DATE}, "platform": "app", "platform2": "iOS"}},
     {"$group": {"_id": None, "users": {"$addToSet": "$user"}}}
 ]
 
