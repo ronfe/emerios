@@ -47,3 +47,29 @@ def aggregate(condition):
         device: result_device,
         user: result_user
     }
+
+# dataset.aggregate("enterGuidePage")
+# dataset.aggregate({$in: ["A", "B"]})
+
+eventKeylist = [
+    "enterGuidePage",
+    "clickExperience",
+    "enterSignupPage",
+    "clickSignupBtn",
+    "startChapter",
+    "enterTopic",
+    {"$in": ["startMaster", "startLearning"]},
+    {"$in": ["finishVideo", "problemSetSuccess"]},
+    {"$in": ["completeLearning", "completeMaster"]},
+    "startVideo",
+    "startMaster",
+    "finishVideo",
+    "problemSetSuccess",
+    "completeLearning",
+    "completeMaster",
+]
+
+for eventKey in eventKeylist:
+    print("eventKey: %s")%(eventKey)
+    dataset.aggregate(eventKey)
+    print("")
