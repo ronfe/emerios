@@ -15,7 +15,7 @@ user_attr = db['userAttr']
 device_cache = db['deviceCache']
 
 START_DATE = datetime.datetime(2015,11,1)
-END_DATE = datetime.datetime(2015,11,3)
+END_DATE = datetime.datetime(2015,11,1,1)
 
 START_TIMESTAMP = calendar.timegm(START_DATE.utctimetuple())
 END_TIMESTAMP = calendar.timegm(END_DATE.utctimetuple())
