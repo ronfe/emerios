@@ -24,15 +24,20 @@ def get_all_user_id():
     unit_users = {}
     for each in user_list:
         unit_devices.append(each['devices'][0])
+    # uniquify devices
+    unit_devices = list(set(unit_devices))
 
     for each in device_list:
         if len(each['users']) > 1:
             unit_users[str(each['_id'])] = each['users']
+            # remove the device if multiple users applied
+            if each['_id'] in unit_devices:
+                unit_devices.remove(each["_id"])
         elif len(each['users']) == 0:
             unit_devices.append(each['_id'])
 
     return {
-        "devices": list(set(unit_devices)),
+        "devices": unit_devices,
         "users": unit_users
     }
 
@@ -61,7 +66,8 @@ def get_new_user_id():
 
 
     result["devices"] = [each for each in all_users["devices"] if judge_device(each)]
-    for k, v in result["users"].iteritems():
+    for k, v in all_users["users"].iteritems():
+        result['users'][k] = []
         user_list = v
         temp = [each for each in user_list if judge_user(each)]
         if len(temp) == 0:

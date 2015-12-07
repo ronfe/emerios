@@ -32,7 +32,8 @@ for i in range(1):
 
 print random_chains
 
-devices = [randomword(10) for i in range(2000)]
+devices = [randomword(10) for i in range(1000)]
+users = [randomuser() for i in range(500)]
 
 template_event = {
     "eventKey": "",
@@ -58,8 +59,8 @@ for i in range(len(devices)):
             this_event['eventTime'] = random_longed(curTime)
             curTime = datetime.datetime.fromtimestamp(this_event['eventTime'])
             this_event['device'] = device_id
-            # if this_event['eventKey'] == 'startChapter':
-            # this_event['user'] = randomuser()[0]
+            if i % 2 == 0:
+                this_event['user'] = users[i / 2][0]
             mock_events.insert_one(this_event)
 
 print 'done'
