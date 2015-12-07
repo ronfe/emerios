@@ -1,6 +1,8 @@
 __author__ = 'centsent'
 from metaConfig import *
+from userFilter import *
 
+new_users = get_new_user_id()
 def aggregate(condition):
     pipeLine = [
         {
@@ -50,8 +52,8 @@ def aggregate(condition):
         result_user = []
 
     return {
-        device: result_device,
-        user: result_user
+        "device": result_device,
+        "user": result_user
     }
 
 def aggregateTopic(condition, topics):
@@ -105,8 +107,8 @@ def aggregateTopic(condition, topics):
         result_user = []
 
     return {
-        device: result_device,
-        user: result_user
+        "device": result_device,
+        "user": result_user
     }
 
 def aggregateMaster(condition, masters):
@@ -160,8 +162,8 @@ def aggregateMaster(condition, masters):
         result_user = []
 
     return {
-        device: result_device,
-        user: result_user
+        "device": result_device,
+        "user": result_user
     }
 
 # dataset.aggregate("enterGuidePage")
