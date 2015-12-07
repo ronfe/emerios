@@ -8,15 +8,17 @@ def test():
 
 def get_all_user_id():
     pipeLine = [
-        {"$match": {"eventTime": {"$gte": START_DATE, "$lt": END_DATE}}},
+        {"$match": {"eventTime": {"$gte": START_TIMESTAMP, "$lt": END_TIMESTAMP}}},
         {"$group": {"_id": "$device", "users": {"$addToSet": "$user"}}}
     ]
     userPipeLine = [
-        {"$match": {"eventTime": {"$gte": START_DATE, "$lt": END_DATE}}},
+        {"$match": {"eventTime": {"$gte": START_TIMESTAMP, "$lt": END_TIMESTAMP}}},
         {"$group": {"_id": "$user", "devices": {"$addToSet": "$device"}}}
     ]
-    device_list = list(events.aggregate(pipeLine))
-    user_list = list(events.aggregate(userPipeLine))
+    # device_list = list(events.aggregate(pipeLine))
+    # user_list = list(events.aggregate(userPipeLine))
+    device_list = list(mock_events.aggregate(pipeLine))
+    user_list = list(mock_events.aggregate(userPipeLine))
 
     unit_devices = []
     unit_users = {}
@@ -26,9 +28,11 @@ def get_all_user_id():
     for each in device_list:
         if len(each['users']) > 1:
             unit_users[str(each['_id'])] = each['users']
+        elif len(each['users']) == 0:
+            unit_devices.append(each['_id'])
 
     return {
-        "devices": unit_devices,
+        "devices": list(set(unit_devices)),
         "users": unit_users
     }
 
@@ -48,7 +52,8 @@ def get_new_user_id():
             return True
 
     def judge_user(user_id):
-        x = users.find_one({"_id": user_id, "activateDate": {"$gte": START_DATE, "$lt": END_DATE}})
+        # x = users.find_one({"_id": user_id, "activateDate": {"$gte": START_DATE, "$lt": END_DATE}})
+        x = user_attr.find_one({"userId": user_id, "activatedTime": {"$gte": START_DATE, "$lt": END_DATE}})
         if x == None:
             return False
         else:

@@ -2,14 +2,14 @@ __author__ = 'ronfe'
 
 from metaConfig import *
 
-user_ids = users.distinct("_id", filter={"activateDate": {"$exists": True}})
-
+# user_ids = users.distinct("_id", filter={"activateDate": {"$exists": True}})
+user_ids = user_attr.distinct("userId", filter={"activatedTime": {"$exists": True}})
 result_device = {}
 
 def process_cursor(cursor):
     for doc in cursor:
         device_id = str(doc['device'])
-        event_time = datetime.datetime.fromtimestamp(doc['eventTime'] / 1000)
+        event_time = datetime.datetime.fromtimestamp(doc['eventTime']) - datetime.timedelta(hours=8)
         # user_id = doc['user']
         previous_device = device_cache.find_one({"deviceId": device_id})
         if previous_device == None:
@@ -22,7 +22,8 @@ def process_cursor(cursor):
             "activateDate": activate_date
         }, upsert=True)
 
-cursors = events.parallel_scan(10)
+# cursors = events.parallel_scan(10)
+cursors = mock_events.parallel_scan(10)
 threads = [
     threading.Thread(target=process_cursor, args=(cursor, )) for cursor in cursors
 ]
