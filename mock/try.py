@@ -16,10 +16,10 @@ def send_point(data):
 def randomword(length):
    return ''.join(random.choice(string.lowercase) for i in range(length))
 
-def randomuser():
+def randomuser(times):
     global user_list
     # user_list = users.distinct("_id")
-    return random.sample(user_list, 1)
+    return random.sample(user_list, times)
 
 chains = ["enterGuidePage", "clickUserLogBtn"]
 
@@ -33,7 +33,7 @@ for i in range(1):
 print random_chains
 
 devices = [randomword(10) for i in range(1000)]
-users = [randomuser() for i in range(500)]
+users = randomuser(500)
 
 template_event = {
     "eventKey": "",
@@ -60,7 +60,7 @@ for i in range(len(devices)):
             curTime = datetime.datetime.fromtimestamp(this_event['eventTime'])
             this_event['device'] = device_id
             if i % 2 == 0:
-                this_event['user'] = users[i / 2][0]
+                this_event['user'] = users[i / 2]
             mock_events.insert_one(this_event)
 
 print 'done'
