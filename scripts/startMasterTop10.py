@@ -3,12 +3,13 @@
 import sys
 sys.path.append("..")
 
-# 周前十知识点学习模块
+# 周前十知识点练习模块
 
 from wheels import *
 from wheels import dataset
 from wheels import courseFilter
 from wheels import userFilter
+from wheels import getPercent
 
 top10Master = courseFilter.weeklyStartMasterTop10()
 top10MasterList = []
@@ -30,11 +31,15 @@ def startMasterTotalNumber(top10MasterList):
 
     return list(events.aggregateMaster(pipeLine))
 
+print("练习进入总量：")
+print(len(startMasterTotalNumber(top10MasterList)))
+
+# 挑战失败率
 # 挑战失败量/挑战进入量
 def failureRetetion(top10MasterList):
     pipeLine = [
         {"$match": {
-            "eventKey": "completeMaster",
+            "eventKey": "challengeFailure",
             "eventValue.topicId": top10MasterList
         }},
         {"$group": {
@@ -46,7 +51,7 @@ def failureRetetion(top10MasterList):
 
     pipeLine = [
         {"$match": {
-            "eventKey": "startMaster",
+            "eventKey": "startChallenge",
             "eventValue.topicId": top10MasterList
         }},
         {"$group": {
@@ -56,8 +61,9 @@ def failureRetetion(top10MasterList):
     ]
     startMasterNum = len(list(events.aggregateMaster(pipeLine)))
 
-    return completeMasterNum/startMasterNum
+    return getPercent.getPerNum(completeMasterNum,startMasterNum)
 
+print("挑战失败率: %s %")%(failureRetetion(top10MasterList))
 
 # 挑战完成率
 # 挑战成功+失败量/挑战进入量
@@ -86,6 +92,6 @@ def successFinishRetetion(top10MasterList):
     ]
     finishNum = len(list(events.aggregateMaster(pipeLine)))
 
-    return successAndFailureNum/finishNum
+    return getPercent.getPerNum(successAndFailureNum,finishNum)
 
-print("挑战完成率: %s")%(successFinishRetetion(top10MasterList))
+print("挑战完成率: %s %")%(successFinishRetetion(top10MasterList))
