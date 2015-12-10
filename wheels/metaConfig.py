@@ -15,6 +15,7 @@ user_attr = another_db['userAttr']
 device_cache = db['deviceCache']
 topics = db_3['topics']
 hypervideos = db_3['hypervideos']
+problemsets = db_3['problemsets']
 
 START_DATE = datetime.datetime(2015,11,1)
 END_DATE = datetime.datetime(2015,11,1,1)
