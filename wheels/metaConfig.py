@@ -6,12 +6,10 @@ import datetime
 import threading
 import calendar
 
-db = MongoClient('10.8.8.111:27017')['yangcong-prod25']
-events = db['mockEvents']
-mock_events = db['mockEvents']
+db = MongoClient('10.8.8.111:27017')['onlinedb30']
+events = db['events']
 users = db['users']
 user_attr = db['userAttr']
-
 device_cache = db['deviceCache']
 
 START_DATE = datetime.datetime(2015,11,1)
