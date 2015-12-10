@@ -15,10 +15,8 @@ def get_all_user_id():
         {"$match": {"eventTime": {"$gte": START_TIMESTAMP, "$lt": END_TIMESTAMP}}},
         {"$group": {"_id": "$user", "devices": {"$addToSet": "$device"}}}
     ]
-    # device_list = list(events.aggregate(pipeLine))
-    # user_list = list(events.aggregate(userPipeLine))
-    device_list = list(mock_events.aggregate(pipeLine))
-    user_list = list(mock_events.aggregate(userPipeLine))
+    device_list = list(events.aggregate(pipeLine))
+    user_list = list(events.aggregate(userPipeLine))
 
     unit_devices = []
     unit_users = {}
