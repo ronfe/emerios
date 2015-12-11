@@ -3,7 +3,7 @@
 import sys
 sys.path.append("..")
 
-# 周前十知识点学习模块
+# 周前十知识点 挑战
 
 from wheels import *
 from wheels import dataset
@@ -18,7 +18,7 @@ for i in range(10):
 def clickAssess(top10TopicsList):
     pipeLine = [
         {"$match": {
-            "eventKey": clickExpVideo,
+            "eventKey": "clickExpVideo",
             "eventValue.topicId": {"$in": top10TopicsList}
         }},
         {"$group": {
@@ -28,12 +28,13 @@ def clickAssess(top10TopicsList):
     ]
     return list(events.aggregate(pipeLine))
 
+print("周前10知识点 点击挑战解析：")
 print(len(clickAssess(top10TopicsList)))
 
 def clickAssessWhenFalse(top10TopicsList):
     pipeLine = [
         {"$match": {
-            "eventKey": clickExpVideo,
+            "eventKey": "clickExpVideo",
             "eventValue.problemState": "incorrect"
         }},
         {"$group": {
@@ -42,5 +43,6 @@ def clickAssessWhenFalse(top10TopicsList):
         }}
     ]
     return list(events.aggregate(pipeLine))
-    
+
+print("周前10知识点 错误后点击解析:")
 print(len(clickAssessWhenFalse(top10TopicsList)))
