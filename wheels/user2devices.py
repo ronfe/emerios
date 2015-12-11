@@ -6,10 +6,14 @@ from metaConfig import *
 user_ids = user_attr.distinct("userId", filter={"activatedTime": {"$exists": True}})
 result_device = {}
 
+
 def process_cursor(cursor):
     for doc in cursor:
         device_id = str(doc['device'])
-        event_time = datetime.datetime.fromtimestamp(doc['eventTime']) - datetime.timedelta(hours=8)
+        if doc['platform2'] == 'iOS':
+            event_time = datetime.datetime.fromtimestamp(doc['eventTime'] / 1000) - datetime.timedelta(hours=8)
+        else:
+            event_time = doc['serverTime']
         # user_id = doc['user']
         previous_device = device_cache.find_one({"deviceId": device_id})
         if previous_device == None:
@@ -22,11 +26,12 @@ def process_cursor(cursor):
             "activateDate": activate_date
         }, upsert=True)
 
-# cursors = events.parallel_scan(10)
-cursors = mock_events.parallel_scan(10)
+
+cursors = events.parallel_scan(10)
+# cursors = mock_events.parallel_scan(10)
 threads = [
-    threading.Thread(target=process_cursor, args=(cursor, )) for cursor in cursors
-]
+    threading.Thread(target=process_cursor, args=(cursor,)) for cursor in cursors
+    ]
 
 for thread in threads:
     thread.start()

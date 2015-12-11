@@ -2,9 +2,11 @@ __author__ = 'ronfe'
 
 from metaConfig import *
 
+
 # API used for testing
 def test():
     return "I am testing"
+
 
 def get_all_user_id():
     pipeLine = [
@@ -39,6 +41,7 @@ def get_all_user_id():
         "users": unit_users
     }
 
+
 def get_new_user_id():
     all_users = get_all_user_id()
     # New devices
@@ -62,8 +65,8 @@ def get_new_user_id():
         else:
             return True
 
-
     result["devices"] = [each for each in all_users["devices"] if judge_device(each)]
+    print all_users["devices"]
     for k, v in all_users["users"].iteritems():
         result['users'][k] = []
         user_list = v

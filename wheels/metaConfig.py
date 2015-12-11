@@ -13,12 +13,12 @@ events = db['events']
 users = db['users']
 user_attr = another_db['userAttr']
 device_cache = db['deviceCache']
-topics = db_3['topics']
-hypervideos = db_3['hypervideos']
-problemsets = db_3['problemsets']
+topics = db['topics']
+hypervideos = db['hypervideos']
+problemsets = db['problemsets']
 
-START_DATE = datetime.datetime(2015,11,1)
-END_DATE = datetime.datetime(2015,11,1,1)
+START_DATE = datetime.datetime(2015, 12, 8)
+END_DATE = datetime.datetime(2015, 12, 11)
 
-START_TIMESTAMP = calendar.timegm(START_DATE.utctimetuple())
-END_TIMESTAMP = calendar.timegm(END_DATE.utctimetuple())
+START_TIMESTAMP = calendar.timegm(START_DATE.utctimetuple()) * 1000
+END_TIMESTAMP = calendar.timegm(END_DATE.utctimetuple()) * 1000
